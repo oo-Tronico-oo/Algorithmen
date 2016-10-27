@@ -31,7 +31,6 @@ public class Sortierverfahren {
      * @return gibt eine sortierte Menge von Objekten als List zurueck
      */
     static List sortiereListe(List objektMenge){
-        
-        return null;
+        return objektMenge;
     }
 }
