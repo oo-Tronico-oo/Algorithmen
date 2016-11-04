@@ -1,12 +1,11 @@
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * @Modul: Algorithmen
  * @Dozentin: Prof. Dr. H. Ripphausen-Lipa Beuth Hochschule für Technik
- * @Uebungsaufgabe: Implementierung des Sortierverfahren ...??????????????...
+ * @Uebungsaufgabe: Implementierung des Sortierverfahren Mergesort
  * @author Lisa Bitterling, Katrin Schulze, Nico Nauendorf
  * @erstellt am 27. Oktober 2016
  */
@@ -19,10 +18,9 @@ public class Main {
      * wurden
      */
     public static void main(String[] args) {
-
-        List ausgangsArray = intArrayToList(FileIntArray.FileToIntArray("src/DateinIntZahlen/Rand10_1"));
-        
-        System.out.println(Sortierverfahren.sortiereListe(ausgangsArray));
+        //lese die Datei ein und generiere ein int[]
+        int[] ausgangsArray = FileIntArray.FileToIntArray("src/DateinIntZahlen/Rand10_1");
+        Sortierverfahren.sortiereNachMergeSort(ausgangsArray, 0, ausgangsArray.length - 1);
     }
 
     /**
@@ -33,10 +31,12 @@ public class Main {
      */
     private static List intArrayToList(int[] intMenge){
         List intList = new ArrayList(intMenge.length);
-
+        
+        //kopieren der Elemente aus int[] in List
         for (int i = 0; i < intMenge.length; i++) {
             intList.add(intMenge[i]);
-        };
+        }
+        
         return intList;
     }
 }

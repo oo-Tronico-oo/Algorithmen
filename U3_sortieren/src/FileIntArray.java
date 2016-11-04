@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.*;
 
 
 public class FileIntArray {
@@ -38,7 +37,7 @@ public class FileIntArray {
 		         A[i] = j;
 		      }
 		  }
-		  catch (Exception e) {
+		  catch (IOException | NumberFormatException e) {
 				System.out.println("Einlesen nicht erfolgreich");
 		  }
 
