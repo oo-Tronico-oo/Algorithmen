@@ -20,7 +20,9 @@ public class Main {
     public static void main(String[] args) {
         //lese die Datei ein und generiere ein int[]
         int[] ausgangsArray = FileIntArray.FileToIntArray("src/DateinIntZahlen/Rand10_1");
-        Sortierverfahren.sortiereNachMergeSort(ausgangsArray, 0, ausgangsArray.length - 1);
+        Sortierverfahren.sortiereNachMergeSort(ausgangsArray);
+        gebeArrayInKonsoleAus(ausgangsArray);
+        pruefeObRichtigSortiert(ausgangsArray);
     }
 
     /**
@@ -38,5 +40,33 @@ public class Main {
         }
         
         return intList;
+    }
+    
+    /**
+     * private Hilfsmethode um ein Integerarray auszugeben
+     * @param array erwartet ein intArray
+     */
+    private static void gebeArrayInKonsoleAus(int[] array){
+        System.out.print("\nsortiert: [" + array[0]);
+        for(int i = 1; i < array.length; i++){
+            System.out.print(", " + array[i]);
+        }
+        System.out.println("]");
+    }
+
+    /**
+     * private Hilfsmethode um die richtige Reihenfolge zu prüfen und ein OK auf der Konsole auszugeben
+     * @param array erwartet ein sortiertes intArray
+     */
+    private static void pruefeObRichtigSortiert(int[] array) {
+        boolean pruefung = true;
+        //überprüft jedes Element im array ob es kleiner als das Element rechts daneben ist
+        for(int i = 0; i < array.length - 1; i++){
+            if(array[i] > array[i+1]){
+                pruefung = false;
+                break;
+            }
+        }
+        System.out.println("Sortierung ist " + ((pruefung)?"richtig":"falsch") + "!");
     }
 }
