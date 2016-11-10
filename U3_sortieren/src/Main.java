@@ -1,7 +1,3 @@
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @Modul: Algorithmen
  * @Dozentin: Prof. Dr. H. Ripphausen-Lipa Beuth Hochschule für Technik
@@ -9,6 +5,9 @@ import java.util.List;
  * @author Lisa Bitterling, Katrin Schulze, Nico Nauendorf
  * @erstellt am 27. Oktober 2016
  */
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Die Mainklasse gibt die Zeitmessung fürs sortieren aus
@@ -23,9 +22,9 @@ public class Main {
      */
     public static void main(String[] args) {
         //gib alle Dateien im Ordner src/DateinIntZahlen
-        File[] f = new File("src/DateinIntZahlen").listFiles();
+        File[] dateienArray = new File("src/DateinIntZahlen").listFiles();
         //messe die Zeiten für alle Dateien
-        for(File i : f){
+        for(File i : dateienArray){
             //lese die Datei ein und generiere ein int[]
             int[] ausgangsArray = FileIntArray.FileToIntArray(i.getPath());
             //speichere die Startzeit
