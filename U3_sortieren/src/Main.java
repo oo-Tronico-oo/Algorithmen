@@ -1,4 +1,4 @@
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,20 +9,35 @@ import java.util.List;
  * @author Lisa Bitterling, Katrin Schulze, Nico Nauendorf
  * @erstellt am 27. Oktober 2016
  */
+
+/**
+ * Die Mainklasse gibt die Zeitmessung fürs sortieren aus
+ */
 public class Main {
 
     /**
-     * Methode zum starten der Anwendung
+     * Methode zum starten der Anwendung um die Zeiten zu messen
      *
      * @param args Array von Parametern, die beim start der Anwendung übergeben
      * wurden
      */
     public static void main(String[] args) {
-        //lese die Datei ein und generiere ein int[]
-        int[] ausgangsArray = FileIntArray.FileToIntArray("src/DateinIntZahlen/Rand10_1");
-        Sortierverfahren.sortiereNachMergeSort(ausgangsArray);
-        gebeArrayInKonsoleAus(ausgangsArray);
-        pruefeObRichtigSortiert(ausgangsArray);
+        //gib alle Dateien im Ordner src/DateinIntZahlen
+        File[] f = new File("src/DateinIntZahlen").listFiles();
+        //messe die Zeiten für alle Dateien
+        for(File i : f){
+            //lese die Datei ein und generiere ein int[]
+            int[] ausgangsArray = FileIntArray.FileToIntArray(i.getPath());
+            //speichere die Startzeit
+            long start = System.nanoTime();
+            //starte sortiere das Ausgangsarry
+            Sortierverfahren.sortiereNachMergeSort(ausgangsArray);
+            //berechne die verbrauchte Zeit in Nanosekunden
+            double dauer = (System.nanoTime() - start) / 1000000.0;
+            //Ausgabe der Daten in der Konsole
+            System.out.print("Dauer: " + dauer + " ns \"" + i.getPath() + "\" ..");
+            pruefeObRichtigSortiert(ausgangsArray);
+        }
     }
 
     /**
@@ -67,6 +82,6 @@ public class Main {
                 break;
             }
         }
-        System.out.println("Sortierung ist " + ((pruefung)?"richtig":"falsch") + "!");
+        System.out.print("Sortierung ist " + ((pruefung)?"richtig":"falsch") + "!\n");
     }
 }

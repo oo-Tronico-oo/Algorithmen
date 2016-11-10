@@ -32,7 +32,7 @@ public class FileIntArray {
 		         einZeile = br.readLine();
 
 		         if (einZeile == null) break;     // Ende der Datei erreicht
-		         System.out.println(einZeile);
+		         //System.out.println(einZeile);
 		         int j = new Integer(einZeile);
 		         A[i] = j;
 		      }
