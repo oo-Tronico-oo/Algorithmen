@@ -6,7 +6,8 @@
  * @erstellt am 27. Oktober 2016
  */
 import java.io.File;
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -27,10 +28,22 @@ public class Main {
         for(File i : dateienArray){
             //lese die Datei ein und generiere ein int[]
             int[] ausgangsArray = FileIntArray.FileToIntArray(i.getPath());
+//            int[] ausgangsArray = FileIntArray.FileToIntArray(dateienArray[8].getPath());
             //speichere die Startzeit
+//            List a = new LinkedList();
+//            for(int wert : ausgangsArray){
+//                System.out.println(wert);
+//                a.add(new TestObjekt(wert));
+//            }
             long start = System.nanoTime();
             //starte sortiere das Ausgangsarry
             Sortierverfahren.sortiereNachMergeSort(ausgangsArray);
+//            Sortierverfahren.sortiereNachMergeSort(a);
+//            System.out.println("");
+//            Iterator it = a.iterator();
+//            while(it.hasNext()){
+//                System.out.println(((TestObjekt)it.next()).wert);
+//            }
             //berechne die verbrauchte Zeit in Nanosekunden
             double dauer = (System.nanoTime() - start) / 1000000.0;
             //Ausgabe der Daten in der Konsole
@@ -39,23 +52,6 @@ public class Main {
         }
     }
 
-    /**
-     * private Hilfsmethode zur Konvertierung von int[] zu List
-     * Vorbereitung für Zusatzaufgabe
-     * @param intMenge erwartet das eingelesene intArray von FileIntArray
-     * @return gibt das neue List-objekt mit den Integer-werten zurück
-     */
-    private static List intArrayToList(int[] intMenge){
-        List intList = new ArrayList(intMenge.length);
-        
-        //kopieren der Elemente aus int[] in List
-        for (int i = 0; i < intMenge.length; i++) {
-            intList.add(intMenge[i]);
-        }
-        
-        return intList;
-    }
-    
     /**
      * private Hilfsmethode um ein Integerarray auszugeben
      * @param array erwartet ein intArray

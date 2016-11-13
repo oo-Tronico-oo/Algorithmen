@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -185,8 +186,8 @@ public class Sortierverfahren {
         // Teilfeld A1 geht von Index linkeGrenze bis mitte
         // Teilfeld A2 geht von Index mitte+1 bis rechteGrenze
         // Vorbedingung: A1 ist sortiert und A2 ist sortiert
-        // tempArray sei Hilfsfeld
-        List tempList = objektMenge.subList(linkeGrenze, rechteGrenze);
+        // tempList sei Hilfsfeld
+        List tempList = new LinkedList();
         tempList.clear();
         // linkeGrenze aktueller Index A1, mitte+1 aktueller Index A2
         int pointerA1 = linkeGrenze;
@@ -195,7 +196,7 @@ public class Sortierverfahren {
         // rechts durchlaufen)
         while(pointerA1 <= mitte && pointerA2 <= rechteGrenze ){
             // kopiere kleineren aktuellen Wert von A1, A2 nach tempList
-            if(((Comparable)objektMenge.get(pointerA1)).compareTo((Comparable)objektMenge.get(pointerA2)) == -1){
+            if(((Comparable)objektMenge.get(pointerA1)).compareTo(objektMenge.get(pointerA2)) == -1){
                 tempList.add(objektMenge.get(pointerA1));
                 // erhöhe akt. Index von Teilfeld mit kleinerem Wert
                 pointerA1++;
