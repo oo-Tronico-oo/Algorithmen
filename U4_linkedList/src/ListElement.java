@@ -13,17 +13,18 @@
  */
 public class ListElement<T> {
     
-    private T value, next, prev;
+    private T value;
+    private ListElement<T> next, prev;
     
-    public void addValue(T value){
+    public void addValue(T value) throws Exception{
         this.value = value;
     }
     
-    public void addNext(T next){
+    public void addNext(ListElement<T> next){
         this.next = next;
     }
     
-    public void addPrev(T prev){
+    public void addPrev(ListElement<T> prev){
         this.prev = prev;
     }
 
@@ -31,11 +32,11 @@ public class ListElement<T> {
         return value;
     }
 
-    public T getNext() {
+    public ListElement<T> getNext() {
         return next;
     }
 
-    public T getPrev() {
+    public ListElement<T> getPrev() {
         return prev;
     }
 }
