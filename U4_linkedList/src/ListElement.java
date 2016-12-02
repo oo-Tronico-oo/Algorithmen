@@ -16,6 +16,12 @@ public class ListElement<T> {
     private T value;
     private ListElement<T> next, prev;
     
+    //***** getter und setter-Methoden ******
+    
+    /**
+     * Methode addValue(T value)
+     * @throws Exception, wenn der Type vom value nicht dem <T> entspricht
+     */
     public void addValue(T value) throws Exception{
         this.value = value;
     }

@@ -19,6 +19,8 @@ public class LinkedList<T> implements List{
     public LinkedList(){
         this.head = new ListElement<>();
         this.tail = new ListElement<>();
+        
+        // setze die Nachfolger- und Vorgängerreferenzen
         head.addNext(this.tail);
         tail.addPrev(this.head);
     }
@@ -29,6 +31,7 @@ public class LinkedList<T> implements List{
     @Override
     public void add(Object value) {
         ListElement<T> neuesElem = new ListElement<>();
+        
         try{
         neuesElem.addValue((T)value);
         }
@@ -37,11 +40,14 @@ public class LinkedList<T> implements List{
                     + "ein Objekt vom falschen Type als Parameter übergeben!");
         }
         
+        // setze die Nachfolger- und Vorgängerreferenzen vom tail(dummy), desen Vorgänger
+        // und vom neuen Element
         tail.getPrev().addNext(neuesElem);
         neuesElem.addPrev(tail.getPrev());
         tail.addPrev(neuesElem);
         neuesElem.addNext(tail);
         
+        // vergrößere die Repräsentation der Listengröße um 1
         size++;
     }
 
@@ -72,17 +78,20 @@ public class LinkedList<T> implements List{
     */
     @Override
     public Object contains(Object value) {
-        int count = this.size;
         ListElement<T> nextListElement = head.getNext();
-        while(count > 0){
+        
+        // führe die Schleife so lange aus, bis der Wert gefunden wurde oder
+        // jedes Element einmal betrachtet wurde
+        for(int count = this.size; count > 0; count--){
             if(nextListElement.getValue().equals(value)){
                 return nextListElement.getValue();
             }
             else{
                 nextListElement = nextListElement.getNext();
-                count--;
             }
         }
+        
+        // return null, wenn der Wert nicht in der Liste existiert
         return null;
     }
 
@@ -96,6 +105,9 @@ public class LinkedList<T> implements List{
     public int indexOf(Object value) {
         int count = 0;
         ListElement<T> nextListElement = head.getNext();
+        
+        // führe die Schleife so lange aus, bis der Wert gefunden wurde oder
+        // jedes Element einmal betrachtet wurde
         while(count < this.size){
             if(nextListElement.getValue().equals(value)){
                 return count;
@@ -105,6 +117,8 @@ public class LinkedList<T> implements List{
                 count++;
             }
         }
+        
+        // return -1, wenn der Wert in der Liste nicht gefunden wurde
         return -1;
     }
 
@@ -118,12 +132,20 @@ public class LinkedList<T> implements List{
     public Object remove(Object value) {
         int count = 0;
         ListElement<T> nextListElement = head.getNext();
+        
+        // führe die Schleife so lange aus, bis der Wert gefunden wurde oder
+        // jedes Element einmal betrachtet wurde
         while(count < this.size){
             if(nextListElement.getValue().equals(value)){
                 
+                // setze die Nachfolger- und Vorgängerreferenzen vom Vorgänger und Nachfolger
+                // neu damit nichts mehr auf das zu löschende Element zeigt
                 nextListElement.getPrev().addNext(nextListElement.getNext());
                 nextListElement.getNext().addPrev(nextListElement.getPrev());
                 
+                // vermindere die Repräsentation der Listengröße um 1
+                size--;
+        
                 return nextListElement.getValue();
             }
             else {
@@ -132,6 +154,7 @@ public class LinkedList<T> implements List{
             }
         }
         
+        // return null wenn der Wert nicht gefunden wurde
         return null;
     }
 
@@ -145,8 +168,13 @@ public class LinkedList<T> implements List{
     public Object remove(int index) throws IndexOutOfBoundsException{
         ListElement<T> tempListElem = getListElement(index);
         
+        // setze die Nachfolger- und Vorgängerreferenzen vom Vorgänger und Nachfolger
+        // neu damit nichts mehr auf das zu löschende Element zeigt
         tempListElem.getPrev().addNext(tempListElem.getNext());
         tempListElem.getNext().addPrev(tempListElem.getPrev());
+        
+        // vermindere die Repräsentation der Listengröße um 1
+        size--;
         
         return tempListElem.getPrev().getValue();
     }
@@ -185,30 +213,26 @@ public class LinkedList<T> implements List{
         
         ListElement<T> nextListElement;
         
+        // beginne die Suche von vorne, wenn index < die Hälfte der ListenElemente ist
+        // und ignoriere den head(dummy)
         if(index < ((this.size - 1)/2) ){
             nextListElement = head.getNext();
-            while(true){
-                if(index == 0){
-                    return nextListElement;
-                }
-                else{
-                    nextListElement = nextListElement.getNext();
-                    index--;
-                }
+            
+            // durchlaufe die Schleife so oft, wie indexParameter
+            for(int i = index; i >= 0; i--){
+                nextListElement = nextListElement.getNext();
             }
         }
+        // ansonsten durchlaufe die Liste von hinten und ignoriere den tail(dummy)
         else{
-            index = this.size - 1 - index;
             nextListElement = tail.getPrev();
-            while(true){
-                if(index == 0){
-                    return nextListElement;
-                }
-                else{
-                    nextListElement = nextListElement.getNext();
-                    index--;
-                }
+            
+            // durchlaufe die Schleife so oft, wie (maxIndexWert - indexParameter)
+            for(int i = this.size - 1 - index; i >= 0; i--){
+                nextListElement = nextListElement.getPrev();
             }
         }
+        
+        return nextListElement;
     }
 }
