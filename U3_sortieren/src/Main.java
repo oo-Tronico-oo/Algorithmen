@@ -28,22 +28,26 @@ public class Main {
         for(File i : dateienArray){
             //lese die Datei ein und generiere ein int[]
             int[] ausgangsArray = FileIntArray.FileToIntArray(i.getPath());
+            
 //            int[] ausgangsArray = FileIntArray.FileToIntArray(dateienArray[8].getPath());
-            //speichere die Startzeit
 //            List a = new LinkedList();
 //            for(int wert : ausgangsArray){
 //                System.out.println(wert);
 //                a.add(new TestObjekt(wert));
 //            }
+
+            //speichere die Startzeit
             long start = System.nanoTime();
             //starte sortiere das Ausgangsarry
             Sortierverfahren.sortiereNachMergeSort(ausgangsArray);
+            
 //            Sortierverfahren.sortiereNachMergeSort(a);
 //            System.out.println("");
 //            Iterator it = a.iterator();
 //            while(it.hasNext()){
 //                System.out.println(((TestObjekt)it.next()).wert);
 //            }
+
             //berechne die verbrauchte Zeit in Nanosekunden
             double dauer = (System.nanoTime() - start) / 1000000.0;
             //Ausgabe der Daten in der Konsole
