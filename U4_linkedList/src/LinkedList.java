@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
  * Sie implementiert das Interface List und Iterator
  * @param <T> erwartet den Typ des abzuspeichernden Objektes
  */
-public class LinkedList<T> implements List,  Iterator<T>{
+public class LinkedList<T> implements List,  Iterator<T> {
     
     private final ListElement<T> head, tail;
     private int size = 0;
@@ -90,17 +90,12 @@ public class LinkedList<T> implements List,  Iterator<T>{
         
         // führe die Schleife so lange aus, bis der Wert gefunden wurde oder
         // jedes Element einmal betrachtet wurde
-        for(int count = this.size; count > 0; count--){
-            if(nextListElement.getValue().equals(value)){
-                return nextListElement.getValue();
-            }
-            else{
-                nextListElement = nextListElement.getNext();
-            }
+        while(nextListElement.getNext() != null && !(nextListElement.getValue().equals(value))){
+            nextListElement = nextListElement.getNext();
         }
         
-        // return null, wenn der Wert nicht in der Liste existiert
-        return null;
+        // return null, wenn der Wert nicht in der Liste existiert, ansonsten den gefundenen Wert
+        return (nextListElement.getNext() == null)?null:nextListElement.getValue();
     }
 
     /**
@@ -116,18 +111,13 @@ public class LinkedList<T> implements List,  Iterator<T>{
         
         // führe die Schleife so lange aus, bis der Wert gefunden wurde oder
         // jedes Element einmal betrachtet wurde
-        while(count < this.size){
-            if(nextListElement.getValue().equals(value)){
-                return count;
-            }
-            else {
-                nextListElement = nextListElement.getNext();
-                count++;
-            }
+        while(nextListElement.getNext() != null && !(nextListElement.getValue().equals(value))){
+            nextListElement = nextListElement.getNext();
+            count++;
         }
         
-        // return -1, wenn der Wert in der Liste nicht gefunden wurde
-        return -1;
+        // return -1, wenn der Wert in der Liste nicht gefunden wurde, ansonsten count
+        return (nextListElement.getNext() == null)?-1:count;
     }
 
     /**
@@ -138,12 +128,11 @@ public class LinkedList<T> implements List,  Iterator<T>{
     */
     @Override
     public Object remove(Object value) {
-        int count = 0;
         ListElement<T> nextListElement = head.getNext();
         
         // führe die Schleife so lange aus, bis der Wert gefunden wurde oder
         // jedes Element einmal betrachtet wurde
-        while(count < this.size){
+        while(nextListElement.getNext() != null){
             if(nextListElement.getValue().equals(value)){
                 
                 // setze die Nachfolger- und Vorgängerreferenzen vom Vorgänger und Nachfolger
@@ -158,7 +147,6 @@ public class LinkedList<T> implements List,  Iterator<T>{
             }
             else {
                 nextListElement = nextListElement.getNext();
-                count++;
             }
         }
         
@@ -207,6 +195,11 @@ public class LinkedList<T> implements List,  Iterator<T>{
         return this.size;
     }
     
+    /**
+     * Returns an iterator over elements of type {@code T}.
+     *
+     * @return an Iterator.
+     */
     public Iterator<T> iterator(){
         return this;
     }
