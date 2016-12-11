@@ -1,3 +1,6 @@
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * @Modul: Algorithmen
  * @Dozentin: Prof. Dr. H. Ripphausen-Lipa Beuth Hochschule für Technik
@@ -11,10 +14,11 @@
  * Sie implementiert das Interface List 
  * @param <T> erwartet den Typ des abzuspeichernden Objektes
  */
-public class LinkedList<T> implements List{
+public class LinkedList<T> implements List,  Iterator<T>{
     
     private final ListElement<T> head, tail;
     private int size = 0;
+    private ListElement<T> iteratorPointer;
     
     public LinkedList(){
         this.head = new ListElement<>();
@@ -23,11 +27,14 @@ public class LinkedList<T> implements List{
         // setze die Nachfolger- und Vorgängerreferenzen
         head.addNext(this.tail);
         tail.addPrev(this.head);
+        
+        iteratorPointer = head;
     }
 
-    /* * appends the specified value to the end of this list
-    * @param value the value to be appended
-    */
+    /**
+     * Fügt den übergebenen Wert am Ende der Liste an
+     * @param value der hinzuzufügende Wert
+     */
     @Override
     public void add(Object value) {
         ListElement<T> neuesElem = new ListElement<>();
@@ -52,11 +59,11 @@ public class LinkedList<T> implements List{
     }
 
     /**
-    * inserts the specified value at the specified position in this list
-    * @param index - index at which the specified value has to be inserted
-    * @param value - value to be inserted
-    * @throws IndexOutOfBoundsException if the index is out of range (<0 or >size())
-    * @throws IllegalArgumentException if the type of value don't equals <T> of LinkedList
+    * Fügt den übergebenen Wert am vorgegebenen Index in die Liste ein
+    * @param index - Index an dem der übergebene Wert eingefügt werden soll
+    * @param value - Wert der eingefügt werden soll
+    * @throws IndexOutOfBoundsException wenn der Index außerhalb der Liste liegt(<0 or >=size())
+    * @throws IllegalArgumentException wenn der Typ des Wertes nicht <T> der LinkedList entspricht
     */ 
     @Override
     public void add(int index, Object value) throws IndexOutOfBoundsException, IllegalArgumentException{
@@ -71,10 +78,10 @@ public class LinkedList<T> implements List{
     }
 
     /**
-    * tests if the specified value is contained in this list
-    * @param value - value whose presence in this list is to be tested
-    * @return the value, if value is contained in this list;
-    *         null, otherwise
+    * Testet, ob der übergebene Wert in der Liste vorhanden ist
+    * @param value - der zu überprüfende Wert, ob in der Liste vorhanden ist
+    * @return den Wert, wenn er in der Liste vorhanden ist;
+    *         null, wenn nicht
     */
     @Override
     public Object contains(Object value) {
@@ -96,10 +103,10 @@ public class LinkedList<T> implements List{
     }
 
     /**
-    * returns the index of the first occurrence of the specified value in this list
-    * @param value - value to search for
-    * @return the index of the first occurrence of the specified value in this list, 
-    *          or -1, if this list does not contain the value
+    * Liefert den Index des erstens Wertes innerhalb der Liste, der dem gesuchten Wert entspricht
+    * @param value - gesuchter Wert
+    * @return der Index des ersten Wertes innerhalb der Liste, der dem gesuchten Wert entspricht, 
+    *          oder -1, wenn der Wert nicht in der Liste vorhanden ist 
     */
     @Override
     public int indexOf(Object value) {
@@ -123,10 +130,10 @@ public class LinkedList<T> implements List{
     }
 
     /**
-    * removes the first occurrence of the specified value from this list
-    * @param value - the value to be removed from this list, if present
-    * @return the removed value, it it is contained in the list;
-    *        null, otherwise
+    * Lösche den erten Wert innerhalb der Liste, der dem gesuchten Wert entspricht
+    * @param value - der von der Liste zu löschende Wert
+    * @return den entfernten Wert, wenn er in der Liste vorhanden war;
+    *        null, wenn der Wert nicht gefunden wurde
     */
     @Override
     public Object remove(Object value) {
@@ -159,10 +166,10 @@ public class LinkedList<T> implements List{
     }
 
     /**
-    * removes the value at the specified index in this list
-    * @param index - the index of the element to be removed
-    * @return the element previously at the specified position
-    * @throws IndexOutOfBoundsException if the index is out of range (<0 or >=size())
+    * Entfernt den übergebenen Wert am vorgegebenen Index innerhalb der Liste
+    * @param index - Index des zu entfernenden Wertes
+    * @return das Element welches zuvor an der durch den Index spezifizierten Stelle war
+    * @throws IndexOutOfBoundsException wenn der Index außerhalb der Liste liegt(<0 or >=size())
     */
     @Override
     public Object remove(int index) throws IndexOutOfBoundsException{
@@ -180,10 +187,10 @@ public class LinkedList<T> implements List{
     }
 
     /**
-    * returns the value at the specified position in this list
-    * @param index - the index of the value to be returned
-    * @return the value at the specified position in this list
-    * @throws IndexOutOfBoundsException if the index is out of range (<0 or >=size())
+    * Liefert den Wert, der am übergebenen Index in der Liste steht, zurück
+    * @param index - der Index des Wertes, der zurückgeliefert werden soll
+    * @return der Wert an der spezifizierten Stelle in der Liste
+    * @throws IndexOutOfBoundsException wenn der Index außerhalb der Liste liegt(<0 or >=size())
     */
     @Override
     public Object get(int index) throws IndexOutOfBoundsException{
@@ -191,12 +198,60 @@ public class LinkedList<T> implements List{
     }
 
     /**
-    * gives the number of elements in this list
-    * @return the number of values in this list
+    * Liefert die Anzahl an Elementen in der Liste zurück
+    * @return die Anzahl der Elemente in der Liste
     */
     @Override
     public int size() {
         return this.size;
+    }
+    
+    public Iterator<T> iterator(){
+        return this;
+    }
+    
+    /**
+     * Returns {@code true} if the iteration has more elements.
+     * (In other words, returns {@code true} if {@link #next} would
+     * return an element rather than throwing an exception.)
+     *
+     * @return {@code true} if the iteration has more elements
+     */
+    @Override
+    public boolean hasNext() {
+        return iteratorPointer.getNext()!= tail;
+    }
+
+    /**
+     * Returns the next element in the iteration.
+     *
+     * @return the next element in the iteration
+     * @throws NoSuchElementException if the iteration has no more elements
+     */
+    @Override
+    public T next() throws NoSuchElementException{
+        if(hasNext()){
+            iteratorPointer = iteratorPointer.getNext();
+            return iteratorPointer.getValue();
+        }
+        else {
+            iteratorPointer = head;
+            throw new NoSuchElementException();
+        }
+    }
+    
+    /**
+     * Removes from the underlying collection the last element returned
+     * by this iterator (optional operation).  This method can be called
+     * only once per call to {@link #next}.  The behavior of an iterator
+     * is unspecified if the underlying collection is modified while the
+     * iteration is in progress in any way other than by calling this
+     * method.
+     */
+    @Override
+    public void remove() {
+        remove(iteratorPointer.getValue());
+        iteratorPointer = iteratorPointer.getPrev();
     }
 
     //######################## private #####################################
