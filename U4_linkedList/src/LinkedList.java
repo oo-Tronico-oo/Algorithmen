@@ -219,7 +219,7 @@ public class LinkedList<T> implements List{
             nextListElement = head.getNext();
             
             // durchlaufe die Schleife so oft, wie indexParameter
-            for(int i = index; i >= 0; i--){
+            for(int i = index; i > 0; i--){
                 nextListElement = nextListElement.getNext();
             }
         }
@@ -228,7 +228,7 @@ public class LinkedList<T> implements List{
             nextListElement = tail.getPrev();
             
             // durchlaufe die Schleife so oft, wie (maxIndexWert - indexParameter)
-            for(int i = this.size - 1 - index; i >= 0; i--){
+            for(int i = this.size - 1 - index; i > 0; i--){
                 nextListElement = nextListElement.getPrev();
             }
         }

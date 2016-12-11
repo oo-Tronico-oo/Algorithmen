@@ -22,7 +22,7 @@ public class ListElement<T> {
      * Methode addValue(T value)
      * @throws Exception, wenn der Type vom value nicht dem <T> entspricht
      */
-    public void addValue(T value) throws Exception{
+    public void addValue(T value) {
         this.value = value;
     }
     
