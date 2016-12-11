@@ -23,6 +23,10 @@ public class LinkedListTest {
     public LinkedListTest() {
     }
 
+    /**
+     * initialisiert vor jeder test-Methode die gefüllte LinkedList
+     * Inhalt ist das Array ausgangsWerte
+     */
     @Before
     public void setUp() {
         for(int i : ausgangsWerte){

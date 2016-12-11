@@ -19,18 +19,18 @@ public class ListElement<T> {
     //***** getter und setter-Methoden ******
     
     /**
-     * Methode addValue(T value)
+     * Methode setValue(T value)
      * @throws Exception, wenn der Type vom value nicht dem <T> entspricht
      */
-    public void addValue(T value) {
+    public void setValue(T value) throws Exception{
         this.value = value;
     }
     
-    public void addNext(ListElement<T> next){
+    public void setNext(ListElement<T> next){
         this.next = next;
     }
     
-    public void addPrev(ListElement<T> prev){
+    public void setPrev(ListElement<T> prev){
         this.prev = prev;
     }
 

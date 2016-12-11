@@ -11,13 +11,15 @@ import java.util.NoSuchElementException;
 
 /**
  * Diese Klasse dient der Speicherung von Objekten in einer doppelt verketteten Liste
- * Sie implementiert das Interface List 
+ * Sie implementiert das Interface List und Iterator
  * @param <T> erwartet den Typ des abzuspeichernden Objektes
  */
 public class LinkedList<T> implements List,  Iterator<T>{
     
     private final ListElement<T> head, tail;
     private int size = 0;
+    
+    // Zeiger auf das zuletzt betrachtete ListElement
     private ListElement<T> iteratorPointer;
     
     public LinkedList(){
@@ -25,8 +27,8 @@ public class LinkedList<T> implements List,  Iterator<T>{
         this.tail = new ListElement<>();
         
         // setze die Nachfolger- und Vorgängerreferenzen
-        head.addNext(this.tail);
-        tail.addPrev(this.head);
+        head.setNext(this.tail);
+        tail.setPrev(this.head);
         
         iteratorPointer = head;
     }
@@ -38,9 +40,8 @@ public class LinkedList<T> implements List,  Iterator<T>{
     @Override
     public void add(Object value) {
         ListElement<T> neuesElem = new ListElement<>();
-        
         try{
-        neuesElem.addValue((T)value);
+        neuesElem.setValue((T)value);
         }
         catch(Exception ex){
             throw new IllegalArgumentException("Der Methode add(Object value) wurde "
@@ -49,10 +50,10 @@ public class LinkedList<T> implements List,  Iterator<T>{
         
         // setze die Nachfolger- und Vorgängerreferenzen vom tail(dummy), desen Vorgänger
         // und vom neuen Element
-        tail.getPrev().addNext(neuesElem);
-        neuesElem.addPrev(tail.getPrev());
-        tail.addPrev(neuesElem);
-        neuesElem.addNext(tail);
+        tail.getPrev().setNext(neuesElem);
+        neuesElem.setPrev(tail.getPrev());
+        tail.setPrev(neuesElem);
+        neuesElem.setNext(tail);
         
         // vergrößere die Repräsentation der Listengröße um 1
         size++;
@@ -69,7 +70,7 @@ public class LinkedList<T> implements List,  Iterator<T>{
     public void add(int index, Object value) throws IndexOutOfBoundsException, IllegalArgumentException{
         ListElement<T> elem = getListElement(index);
         try{
-            elem.addValue((T)value);
+            elem.setValue((T)value);
         }
         catch(Exception ex){
             throw new IllegalArgumentException("Der Methode add(int index, Object value) "
@@ -147,8 +148,8 @@ public class LinkedList<T> implements List,  Iterator<T>{
                 
                 // setze die Nachfolger- und Vorgängerreferenzen vom Vorgänger und Nachfolger
                 // neu damit nichts mehr auf das zu löschende Element zeigt
-                nextListElement.getPrev().addNext(nextListElement.getNext());
-                nextListElement.getNext().addPrev(nextListElement.getPrev());
+                nextListElement.getPrev().setNext(nextListElement.getNext());
+                nextListElement.getNext().setPrev(nextListElement.getPrev());
                 
                 // vermindere die Repräsentation der Listengröße um 1
                 size--;
@@ -177,8 +178,8 @@ public class LinkedList<T> implements List,  Iterator<T>{
         
         // setze die Nachfolger- und Vorgängerreferenzen vom Vorgänger und Nachfolger
         // neu damit nichts mehr auf das zu löschende Element zeigt
-        tempListElem.getPrev().addNext(tempListElem.getNext());
-        tempListElem.getNext().addPrev(tempListElem.getPrev());
+        tempListElem.getPrev().setNext(tempListElem.getNext());
+        tempListElem.getNext().setPrev(tempListElem.getPrev());
         
         // vermindere die Repräsentation der Listengröße um 1
         size--;
