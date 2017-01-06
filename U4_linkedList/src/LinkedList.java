@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
  * Sie implementiert das Interface List und Iterator
  * @param <T> erwartet den Typ des abzuspeichernden Objektes
  */
-public class LinkedList<T> implements List,  Iterator<T> {
+public class LinkedList<T> implements List<T>,  Iterator<T> {
     
     private final ListElement<T> head, tail;
     private int size = 0;
@@ -38,25 +38,8 @@ public class LinkedList<T> implements List,  Iterator<T> {
      * @param value der hinzuzufügende Wert
      */
     @Override
-    public void add(Object value) {
-        ListElement<T> neuesElem = new ListElement<>();
-        try{
-        neuesElem.setValue((T)value);
-        }
-        catch(Exception ex){
-            throw new IllegalArgumentException("Der Methode add(Object value) wurde "
-                    + "ein Objekt vom falschen Type als Parameter übergeben!");
-        }
-        
-        // setze die Nachfolger- und Vorgängerreferenzen vom tail(dummy), desen Vorgänger
-        // und vom neuen Element
-        tail.getPrev().setNext(neuesElem);
-        neuesElem.setPrev(tail.getPrev());
-        tail.setPrev(neuesElem);
-        neuesElem.setNext(tail);
-        
-        // vergrößere die Repräsentation der Listengröße um 1
-        size++;
+    public void add(T value){
+        add(size, value);
     }
 
     /**
@@ -64,18 +47,24 @@ public class LinkedList<T> implements List,  Iterator<T> {
     * @param index - Index an dem der übergebene Wert eingefügt werden soll
     * @param value - Wert der eingefügt werden soll
     * @throws IndexOutOfBoundsException wenn der Index außerhalb der Liste liegt(<0 or >=size())
-    * @throws IllegalArgumentException wenn der Typ des Wertes nicht <T> der LinkedList entspricht
     */ 
     @Override
-    public void add(int index, Object value) throws IndexOutOfBoundsException, IllegalArgumentException{
-        ListElement<T> elem = getListElement(index);
-        try{
-            elem.setValue((T)value);
-        }
-        catch(Exception ex){
-            throw new IllegalArgumentException("Der Methode add(int index, Object value) "
-                    + "wurde ein Objekt vom falschen Type als Parameter übergeben!");
-        }
+    public void add(int index, T value) throws IndexOutOfBoundsException{
+        //gib aktuelles Element auf dem index
+        ListElement<T> indexElem = (index==size)?tail:getListElement(index);
+        //erzeuge das einzufuegende Element
+        ListElement<T> neuesElem = new ListElement<>();
+        neuesElem.setValue(value);
+        
+        // setze die Nachfolger- und Vorgängerreferenzen vom vom alten Element, desen Vorgänger
+        // und vom neuen Element
+        indexElem.getPrev().setNext(neuesElem);
+        neuesElem.setPrev(indexElem.getPrev());
+        indexElem.setPrev(neuesElem);
+        neuesElem.setNext(indexElem);
+        
+        // vergrößere die Repräsentation der Listengröße um 1
+        size++;
     }
 
     /**
@@ -85,7 +74,7 @@ public class LinkedList<T> implements List,  Iterator<T> {
     *         null, wenn nicht
     */
     @Override
-    public Object contains(Object value) {
+    public T contains(T value) {
         ListElement<T> nextListElement = head.getNext();
         
         // führe die Schleife so lange aus, bis der Wert gefunden wurde oder
@@ -105,7 +94,7 @@ public class LinkedList<T> implements List,  Iterator<T> {
     *          oder -1, wenn der Wert nicht in der Liste vorhanden ist 
     */
     @Override
-    public int indexOf(Object value) {
+    public int indexOf(T value) {
         int count = 0;
         ListElement<T> nextListElement = head.getNext();
         
@@ -127,7 +116,7 @@ public class LinkedList<T> implements List,  Iterator<T> {
     *        null, wenn der Wert nicht gefunden wurde
     */
     @Override
-    public Object remove(Object value) {
+    public T remove(T value) {
         ListElement<T> nextListElement = head.getNext();
         
         // führe die Schleife so lange aus, bis der Wert gefunden wurde oder
@@ -161,7 +150,7 @@ public class LinkedList<T> implements List,  Iterator<T> {
     * @throws IndexOutOfBoundsException wenn der Index außerhalb der Liste liegt(<0 or >=size())
     */
     @Override
-    public Object remove(int index) throws IndexOutOfBoundsException{
+    public T remove(int index) throws IndexOutOfBoundsException{
         ListElement<T> tempListElem = getListElement(index);
         
         // setze die Nachfolger- und Vorgängerreferenzen vom Vorgänger und Nachfolger
@@ -182,7 +171,7 @@ public class LinkedList<T> implements List,  Iterator<T> {
     * @throws IndexOutOfBoundsException wenn der Index außerhalb der Liste liegt(<0 or >=size())
     */
     @Override
-    public Object get(int index) throws IndexOutOfBoundsException{
+    public T get(int index) throws IndexOutOfBoundsException{
         return getListElement(index).getValue();
     }
 

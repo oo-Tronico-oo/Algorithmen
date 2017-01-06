@@ -41,10 +41,10 @@ public class LinkedListTest {
     public void testAdd_Object() {
         System.out.println("add");
         fullList.add(16);
-        assertEquals(16, fullList.contains(16));
+        assertEquals(16, (int)fullList.contains(16));
         assertEquals(11, fullList.size());
     }
-
+    
     /**
      * Test der add Methode, der Klasse LinkedList.
      */
@@ -52,8 +52,8 @@ public class LinkedListTest {
     public void testAdd_int_Object() {
         System.out.println("add with index");
         fullList.add(1, 12);
-        assertEquals(12, fullList.contains(12));
-        assertEquals(10, fullList.size());
+        assertEquals(12, (int)fullList.contains(12));
+        assertEquals(11, fullList.size());
     }
 
     /**
@@ -62,7 +62,7 @@ public class LinkedListTest {
     @Test
     public void testContains() {
         System.out.println("contains");
-        assertEquals(78, fullList.contains(78));
+        assertEquals(78, (int)fullList.contains(78));
         assertEquals(null, fullList.contains(3));
     }
 
@@ -82,7 +82,7 @@ public class LinkedListTest {
     @Test
     public void testRemove_Object() {
         System.out.println("remove");
-        assertEquals(8, fullList.remove(new Integer(8)));
+        assertEquals(8, (int)fullList.remove(new Integer(8)));
         assertEquals(null, fullList.remove(new Integer(3)));
         assertEquals(9, fullList.size());
     }
@@ -93,7 +93,7 @@ public class LinkedListTest {
     @Test
     public void testRemove_int() {
         System.out.println("remove on index");
-        assertEquals(78, fullList.remove(7));
+        assertEquals(78, (int)fullList.remove(7));
         assertEquals(9, fullList.size());
     }
 
@@ -103,9 +103,9 @@ public class LinkedListTest {
     @Test
     public void testGet() {
         System.out.println("get");
-        assertEquals(2, fullList.get(0));
-        assertEquals(19, fullList.get(4));
-        assertEquals(1600, fullList.get(9));
+        assertEquals(2, (int)fullList.get(0));
+        assertEquals(19, (int)fullList.get(4));
+        assertEquals(1600, (int)fullList.get(9));
     }
 
     /**

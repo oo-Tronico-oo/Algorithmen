@@ -20,9 +20,9 @@ public class ListElement<T> {
     
     /**
      * Methode setValue(T value)
-     * @throws Exception, wenn der Type vom value nicht dem <T> entspricht
+     * @param value erwartet den einzutragenden Wert
      */
-    public void setValue(T value) throws Exception{
+    public void setValue(T value){
         this.value = value;
     }
     
